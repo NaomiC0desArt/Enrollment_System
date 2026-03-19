@@ -1,13 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using Student_Course_System.Services;
-using System.Text.Json.Serialization;
+
 using UniversitySystem.API.Extensions;
 using UniversitySystem.API.Middleware;
-using UniversitySystem.Application.Data;
-using UniversitySystem.Application.Repositories;
-using UniversitySystem.Application.Repositories.Interfaces;
-using UniversitySystem.Application.Services;
-using UniversitySystem.Application.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

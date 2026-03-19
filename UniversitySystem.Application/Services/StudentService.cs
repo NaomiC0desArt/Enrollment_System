@@ -1,10 +1,7 @@
 ﻿using Student_Course_System.Auxiliary;
 using Student_Course_System.Entities.DTOs;
 using UniversitySystem.Application.Entities;
-using UniversitySystem.Application.Services;
 using UniversitySystem.Application.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using UniversitySystem.Application.Data;
 using UniversitySystem.Application.Entities.DTOs.Student;
 using UniversitySystem.Application.Repositories.Interfaces;
 

@@ -1,6 +1,5 @@
 ﻿
 
-using Student_Course_System.Auxiliary;
 using UniversitySystem.Application.Entities;
 
 namespace UniversitySystem.Application.Repositories.Interfaces

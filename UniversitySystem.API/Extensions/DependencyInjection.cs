@@ -5,6 +5,7 @@ using UniversitySystem.Application.Data;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Application.Repositories.Interfaces;
 using UniversitySystem.Application.Repositories;
+using UniversitySystem.Infrastructure.UnitOfWork;
 
 namespace UniversitySystem.API.Extensions
 {

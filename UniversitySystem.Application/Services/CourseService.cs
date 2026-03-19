@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Student_Course_System.Auxiliary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversitySystem.Application.Data;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Course;
 using UniversitySystem.Application.Repositories.Interfaces;

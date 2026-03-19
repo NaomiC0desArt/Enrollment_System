@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversitySystem.Application.Data;
+using UniversitySystem.Application.Repositories;
 using UniversitySystem.Application.Repositories.Interfaces;
 
-namespace UniversitySystem.Application.Repositories
+namespace UniversitySystem.Infrastructure.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
