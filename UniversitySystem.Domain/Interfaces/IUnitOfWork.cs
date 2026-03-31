@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversitySystem.Domain.Interfaces;
 
 namespace UniversitySystem.Application.Repositories.Interfaces
 {
@@ -12,6 +13,7 @@ namespace UniversitySystem.Application.Repositories.Interfaces
         ICourseRepository Courses { get; }
 
         IEnrollmentRepository Enrollments { get; }
+        IUserRepository Users { get; }
         Task<int> CompleteAsync();
     }
 }

@@ -14,7 +14,7 @@ namespace UniversitySystem.Application.Services.Interfaces
         Task<Result<List<CourseDto>>> GetCourses();
         Task<Result<CourseDto>> GetCourseById(int id);
         Task<Result<bool>> DeleteCourse(int id);
-        Task<Course> CreateCourse(string title, int credits);
+        Task<Result<Course>> CreateCourse(string title, int credits);
 
     }
 }

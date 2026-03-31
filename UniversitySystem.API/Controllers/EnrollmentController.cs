@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UniversitySystem.API.Controllers.BaseController;
+using UniversitySystem.Application.DTOs.ApiResponse;
+using UniversitySystem.Application.DTOs.Enrollment;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Services.Interfaces;
 
@@ -7,67 +11,58 @@ namespace UniversitySystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EnrollmentController : ControllerBase
+    public class EnrollmentController : BaseApiController
     {
         public IEnrollmentService _enrollmentService;
+        private readonly IValidator<EnrollStudentRequest> _validator;
 
-        public EnrollmentController(IEnrollmentService enrollmentService)
+        public EnrollmentController(IEnrollmentService enrollmentService, IValidator<EnrollStudentRequest> validator)
         {
             _enrollmentService = enrollmentService;
+            _validator = validator;
         }
 
         [HttpPost]
-        public async Task<IActionResult> EnrollStudent(int studentId, int courseId)
+        public async Task<IActionResult> EnrollStudent([FromBody]EnrollStudentRequest request)
         {
-            var result = await _enrollmentService.EnrollStudent(studentId, courseId);
+            var validation = HandleValidation(await _validator.ValidateAsync(request));
+            if (validation != null) return validation;
 
-            if (!result.IsSuccess) return BadRequest(result.Error);
-            return Ok(result);
+            var result = await _enrollmentService.EnrollStudent(request.StudentId, request.CourseId);
+            return Ok(ApiResponse<object>.Ok(null, "Student enrolled successfully!!"));
         }
 
         [HttpGet("course/{courseId}")]
         public async Task<IActionResult> ListStudentsInCourse(int courseId)
         {
-            var result = await _enrollmentService.ListStudentsInCourse(courseId);
-
-            if (!result.IsSuccess) return NotFound(result.Error);
-            return Ok(result.Value);
+            return HandleResult(await _enrollmentService.ListStudentsInCourse(courseId));
+           
         }
 
         [HttpGet("student/{studentId}")]
         public async Task<IActionResult> ListCoursesForStudent(int studentId)
         {
-            var result = await _enrollmentService.ListCoursesForStudent(studentId);
-
-            if (!result.IsSuccess) return NotFound(result.Error);
-            return Ok(result.Value);
+            return HandleResult(await _enrollmentService.ListCoursesForStudent(studentId));
         }
 
         [HttpGet("report")]
         public async Task<IActionResult> GetEnrollmentReport()
         {
-            var result = await _enrollmentService.GetEnrollmentReport();
-
-            if (!result.IsSuccess) return NotFound(result.Error);
-            return Ok(result.Value);
+            return HandleResult( await _enrollmentService.GetEnrollmentReport());
         }
 
         [HttpGet("average-grades")]
         public async Task<IActionResult> GetAverageGradePerCourse()
         {
-            var result = await _enrollmentService.GetAverageGradePerCourse();
+           return HandleResult(await _enrollmentService.GetAverageGradePerCourse());
 
-            if (!result.IsSuccess) return NotFound(result.Error);
-            return Ok(result.Value);
         }
 
         [HttpGet("grouped-by-credits")]
         public async Task<IActionResult> CoursesGroupedByCredits()
         {
-            var result = await _enrollmentService.CoursesGroupedByCredits();
+            return HandleResult( await _enrollmentService.CoursesGroupedByCredits());
 
-            if (!result.IsSuccess) return NotFound(result.Error);
-            return Ok(result.Value);
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using UniversitySystem.Application.Data;
 using UniversitySystem.Application.Repositories;
 using UniversitySystem.Application.Repositories.Interfaces;
+using UniversitySystem.Domain.Interfaces;
+using UniversitySystem.Infrastructure.Repositories;
 
 namespace UniversitySystem.Infrastructure.UnitOfWork
 {
@@ -15,6 +17,7 @@ namespace UniversitySystem.Infrastructure.UnitOfWork
         public IStudentRepository Students { get; private set; }
         public ICourseRepository Courses { get; private set; }
         public IEnrollmentRepository Enrollments { get; private set; }
+        public IUserRepository Users { get; private set; }
 
         public UnitOfWork(UniversityDbContext context)
         {
@@ -22,6 +25,7 @@ namespace UniversitySystem.Infrastructure.UnitOfWork
             Students = new StudentRepository(_context);
             Courses = new CourseRepository(_context);
             Enrollments = new EnrollmentRepository(_context);
+            Users = new UserRepository(_context);
         }
 
         public async Task<int> CompleteAsync() => await _context.SaveChangesAsync();

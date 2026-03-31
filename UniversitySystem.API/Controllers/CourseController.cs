@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UniversitySystem.API.Controllers.BaseController;
+using UniversitySystem.Application.DTOs.ApiResponse;
+using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Course;
 using UniversitySystem.Application.Services.Interfaces;
 
@@ -7,51 +11,48 @@ namespace UniversitySystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseController : ControllerBase
+    public class CourseController : BaseApiController
     {
         public ICourseService _courseService;
+        private readonly IValidator<CreateCourse> _validator;
 
-        public CourseController(ICourseService courseService)
+
+        public CourseController(ICourseService courseService, IValidator<CreateCourse> validator)
         {
             _courseService = courseService;
+            _validator = validator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _courseService.GetCourses();
+            return HandleResult(await _courseService.GetCourses());
 
-            if (!result.IsSuccess) return NotFound(result.Error);
-
-            return Ok(result.Value);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _courseService.GetCourseById(id);
+           return HandleResult( await _courseService.GetCourseById(id));
 
-            if (!result.IsSuccess) return NotFound(result.Error);
-
-            return Ok(result.Value);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCourse course)
         {
-            var result = await _courseService.CreateCourse(course.Title, course.Credits);
+            var validationResult = await _validator.ValidateAsync(course);
 
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            var validationResponse = HandleValidation(validationResult);
+            if (validationResponse != null) return validationResponse;
+
+            return HandleResult(await _courseService.CreateCourse(course.Title, course.Credits));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _courseService.DeleteCourse(id);
+            return HandleResult( await _courseService.DeleteCourse(id));
 
-            if (!result.IsSuccess) return NotFound(result.Error);
-
-            return NoContent();
         }
     }
 }

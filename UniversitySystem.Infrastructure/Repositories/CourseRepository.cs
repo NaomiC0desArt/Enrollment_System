@@ -61,5 +61,9 @@ namespace UniversitySystem.Application.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public Task<bool> TitleExists(string title)
+        {
+            return _context.Courses.AnyAsync(c => c.Title == title);
+        }
     }
 }

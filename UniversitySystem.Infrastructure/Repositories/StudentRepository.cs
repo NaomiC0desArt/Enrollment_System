@@ -2,13 +2,17 @@
 using Student_Course_System.Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversitySystem.Application.Data;
+using UniversitySystem.Application.DTOs.Common;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Student;
+using UniversitySystem.Application.Features.Students;
 using UniversitySystem.Application.Repositories.Interfaces;
+using UniversitySystem.Domain.Common;
 
 namespace UniversitySystem.Application.Repositories
 {
@@ -48,6 +52,32 @@ namespace UniversitySystem.Application.Repositories
 
         public void Update(Student student) => _context.Students.Update(student);
 
+        public async Task<PagedResult<Student>> GetStudentsAsync(StudentFilter filters)
+        {
+
+            var query = _context.Students
+                .AsNoTracking()
+                .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                .ApplyFilters(filters)
+                .ApplySorting(filters.SortBy, filters.IsDescending);
+
+            var totalCount = await query.CountAsync();
+
+            var items =  await query
+                .Skip((filters.PageNumber - 1) * filters.PageSize)
+                .Take(filters.PageSize)
+                .ToListAsync();
+
+            return new PagedResult<Student>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                PageNumber = filters.PageNumber,
+                PageSize = filters.PageSize
+            };
+        }
+
         public async Task<List<Student>> GetStudentsWithEnrollmentsAsync()
         {
             return await _context.Students
@@ -56,6 +86,14 @@ namespace UniversitySystem.Application.Repositories
                 .ToListAsync();
         }
 
+        public async Task<bool> EmailAlreadyExists(string email)
+        {
+            return await _context.Students.AnyAsync(s => s.Email == email);
+        }
 
+        public Task<bool> EmailExistsForAnotherStudent(int id, string email)
+        {
+            return _context.Students.AnyAsync(s => s.Email == email && s.Id != id);
+        }
     }
 }

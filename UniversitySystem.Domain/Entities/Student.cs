@@ -5,12 +5,8 @@ namespace UniversitySystem.Application.Entities
     public class Student
     {
         public int Id { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
-        [EmailAddress]
         public string Email { get; set; }
-
         public List<Enrollment> Enrollments { get; private set; } = new();
 
         public Student() { }

@@ -3,6 +3,7 @@ using Student_Course_System.Auxiliary;
 using Student_Course_System.Entities.DTOs;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Course;
+using UniversitySystem.Application.Exceptions;
 using UniversitySystem.Application.Repositories.Interfaces;
 using UniversitySystem.Application.Services.Interfaces;
 
@@ -20,18 +21,7 @@ namespace UniversitySystem.Application.Services
         public async Task<Result> EnrollStudent(int studentId, int courseId)
         {
             var student = await _unitOfWork.Students.GetByIdAsync(studentId);
-            if (student == null) return Result.Failure("Student not found");
-
             var course = await _unitOfWork.Courses.GetByIdAsync(courseId);
-            if (course == null) return Result.Failure("Course not found");
-
-            var isAlreadyEnrolled = await _unitOfWork.Enrollments
-                .IsEnrolledAsync(studentId, courseId);
-
-            if (isAlreadyEnrolled)
-            {
-                return Result.Failure("Student is already enrolled in this course.");
-            }
 
             var enrollment = new Enrollment(student, course);
 
@@ -46,7 +36,7 @@ namespace UniversitySystem.Application.Services
             var data = await _unitOfWork.Courses
                 .GetCourseWithStudentsAsync(courseId);
 
-            if (data == null) return Result<(string, List<string>)>.Failure("Course not found.");
+            if (data == null) throw new UserFriendlyException("Course not found.");
 
 
             var result = new
@@ -64,7 +54,7 @@ namespace UniversitySystem.Application.Services
             var student = await _unitOfWork.Students
                 .GetByIdAsync(studentId);
 
-            if (student == null) return Result<(string Name, List<CourseForListResponseDto> courses)>.Failure("Student not found");
+            if (student == null) throw new UserFriendlyException("Student not found");
 
             var result = new
             {
@@ -85,8 +75,8 @@ namespace UniversitySystem.Application.Services
             var courses = await _unitOfWork.Courses
                 .GetAllWithEnrollmentsAsync();
 
-            if(courses == null)
-                return Result<List<CourseEnrollmentSummary>>.Failure("No courses available.");
+            if (courses == null)
+                throw new UserFriendlyException("No courses available.");
 
             var report = courses.Select(c => new CourseEnrollmentSummary
             {
@@ -103,8 +93,8 @@ namespace UniversitySystem.Application.Services
             var courses = await _unitOfWork.Courses
                 .GetAllWithEnrollmentsAsync();
 
-            if(courses == null)
-                return Result<List<CourseEnrollmentSummary>>.Failure("No courses available.");
+            if (courses == null)
+                throw new UserFriendlyException("No courses available.");
 
 
             var report = courses.Select(c => new CourseEnrollmentSummary
@@ -122,8 +112,8 @@ namespace UniversitySystem.Application.Services
         {
             var courses = await _unitOfWork.Courses.GetAllAsync();
 
-            if (courses == null||!courses.Any()) 
-                return Result<Dictionary<int, List<CourseDto>>>.Failure("No courses available.");
+            if (courses == null || !courses.Any())
+                throw new UserFriendlyException("No courses available.");
 
 
             var result = courses.Select(c => new CourseDto

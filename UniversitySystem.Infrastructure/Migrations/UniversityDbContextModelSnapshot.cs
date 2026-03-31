@@ -35,11 +35,35 @@ namespace UniversitySystem.Application.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Credits = 4,
+                            Title = "Sistemas Operativos I"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Credits = 4,
+                            Title = "Programación Orientada a Objetos"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Credits = 3,
+                            Title = "Bases de Datos Avanzadas"
+                        });
                 });
 
             modelBuilder.Entity("UniversitySystem.Application.Entities.Enrollment", b =>
@@ -57,7 +81,9 @@ namespace UniversitySystem.Application.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Grade")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -81,7 +107,8 @@ namespace UniversitySystem.Application.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -90,7 +117,68 @@ namespace UniversitySystem.Application.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("UniversitySystem.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"),
+                            CreatedAt = new DateTime(2026, 3, 28, 23, 21, 50, 744, DateTimeKind.Utc).AddTicks(5076),
+                            Email = "admin@university.do",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PasswordHash = "$2a$11$mC8.L.R.v.y.p.v.v.v.v.v.v.v.v.v.v.v.v.v.v.v.v.v.v.v.v",
+                            Role = 1,
+                            UpdatedAt = new DateTime(2026, 3, 28, 23, 21, 50, 744, DateTimeKind.Utc).AddTicks(5078)
+                        });
                 });
 
             modelBuilder.Entity("UniversitySystem.Application.Entities.Enrollment", b =>
