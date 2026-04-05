@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Student_Course_System.Auxiliary;
 using System.Net;
-using UniversitySystem.Application.Entities;
+using UniversitySystem.Application.Auxiliary;
 using UniversitySystem.Application.Entities.DTOs.Course;
 using UniversitySystem.Application.Exceptions;
-using UniversitySystem.Application.Repositories.Interfaces;
 using UniversitySystem.Application.Services.Interfaces;
+using UniversitySystem.Domain.Common.Base;
+using UniversitySystem.Domain.Common.Filters;
+using UniversitySystem.Domain.Entities;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Services
 {
@@ -18,13 +20,11 @@ namespace UniversitySystem.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<List<CourseDto>>> GetCourses()
+        public async Task<Result<PagedResult<CourseDto>>> GetCourses(CourseFilter filters)
         {
-            var courses = await _unitOfWork.Courses.GetAllAsync();
+            var pagedEntities =  await _unitOfWork.Courses.GetAllAsync(filters);
 
-            if (courses == null) throw new UserFriendlyException("No courses at the momment.", HttpStatusCode.NotFound);
-
-            var result = courses.Select(c => new CourseDto
+            var dtos = pagedEntities.Items.Select(c => new CourseDto
             {
                 Id = c.Id,
                 Title = c.Title,
@@ -32,7 +32,15 @@ namespace UniversitySystem.Application.Services
                 StudentsName = c.Enrollments.Select(e => e.Student.Name).ToList()
             }).ToList();
 
-            return Result<List<CourseDto>>.Success(result);
+            var pagedDtos = new PagedResult<CourseDto>
+            {
+                Items = dtos,
+                TotalCount = pagedEntities.TotalCount,
+                PageNumber = pagedEntities.PageNumber,
+                PageSize = pagedEntities.PageSize
+            };
+
+            return Result<PagedResult<CourseDto>>.Success(pagedDtos);
         }
 
         public async Task<Result<CourseDto>> GetCourseById(int id)

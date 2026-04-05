@@ -6,6 +6,7 @@ using UniversitySystem.Application.DTOs.ApiResponse;
 using UniversitySystem.Application.DTOs.Enrollment;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Services.Interfaces;
+using UniversitySystem.Domain.Common.Filters;
 
 namespace UniversitySystem.API.Controllers
 {
@@ -15,11 +16,16 @@ namespace UniversitySystem.API.Controllers
     {
         public IEnrollmentService _enrollmentService;
         private readonly IValidator<EnrollStudentRequest> _validator;
+        private readonly IValidator<EnrollmentFilter> _filterValidator;
 
-        public EnrollmentController(IEnrollmentService enrollmentService, IValidator<EnrollStudentRequest> validator)
+        public EnrollmentController
+            (IEnrollmentService enrollmentService, 
+            IValidator<EnrollStudentRequest> validator,
+            IValidator<EnrollmentFilter> filterValidator)
         {
             _enrollmentService = enrollmentService;
             _validator = validator;
+            _filterValidator = filterValidator;
         }
 
         [HttpPost]
@@ -30,6 +36,23 @@ namespace UniversitySystem.API.Controllers
 
             var result = await _enrollmentService.EnrollStudent(request.StudentId, request.CourseId);
             return Ok(ApiResponse<object>.Ok(null, "Student enrolled successfully!!"));
+        }
+
+        [HttpPut("Update-grade")]
+        public async Task<IActionResult> UpdateGrade([FromBody] UpdateGradeDto dto)
+        {
+            var result = await _enrollmentService.UpdateStudentGrade(dto);
+            return HandleResult(result);
+        }
+
+        [HttpGet("Get-by-filter")]
+        public async Task<IActionResult> GetAll([FromQuery] EnrollmentFilter filters)
+        {
+            var validationResult = await _filterValidator.ValidateAsync(filters);
+
+            if (!validationResult.IsValid) return HandleValidation(validationResult);
+
+            return HandleResult(await _enrollmentService.GetEnrollments(filters));
         }
 
         [HttpGet("course/{courseId}")]

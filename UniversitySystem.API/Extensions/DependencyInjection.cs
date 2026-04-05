@@ -1,11 +1,9 @@
-﻿using Student_Course_System.Services;
+﻿
+#region usings
+using Student_Course_System.Services;
 using UniversitySystem.Application.Services.Interfaces;
 using UniversitySystem.Application.Services;
-using UniversitySystem.Application.Data;
 using Microsoft.EntityFrameworkCore;
-using UniversitySystem.Application.Repositories.Interfaces;
-using UniversitySystem.Application.Repositories;
-using UniversitySystem.Infrastructure.UnitOfWork;
 using UniversitySystem.Infrastructure.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -14,9 +12,14 @@ using Microsoft.OpenApi.Models;
 using UniversitySystem.API.Services;
 using UniversitySystem.Application.Validators;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using UniversitySystem.Application.DTOs.ApiResponse;
+using UniversitySystem.Domain.Interfaces.Common;
+using UniversitySystem.Domain.Interfaces.Repositories;
+using UniversitySystem.Persistence.Data;
+using UniversitySystem.Persistence.UnitOfWork;
+#endregion
+
 namespace UniversitySystem.API.Extensions
 {
     public static class DependencyInjection

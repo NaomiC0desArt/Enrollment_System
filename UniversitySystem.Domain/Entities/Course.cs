@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using UniversitySystem.Application.Entities;
 
-namespace UniversitySystem.Application.Entities
+namespace UniversitySystem.Domain.Entities
 {
     public class Course
     {

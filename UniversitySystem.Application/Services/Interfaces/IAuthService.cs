@@ -1,4 +1,4 @@
-﻿using Student_Course_System.Auxiliary;
+﻿using UniversitySystem.Application.Auxiliary;
 using UniversitySystem.Domain.Entities;
 using UniversitySystem.Domain.Enums;
 

@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UniversitySystem.Application\UniversitySystem.Application.csproj" />
     <ProjectReference Include="..\UniversitySystem.Infrastructure\UniversitySystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\UniversitySystem.Persistence\UniversitySystem.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

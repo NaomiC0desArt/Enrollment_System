@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using UniversitySystem.Domain.Entities;
 
 namespace UniversitySystem.Application.Entities
 {
@@ -36,6 +37,13 @@ namespace UniversitySystem.Application.Entities
             }
         }
 
+        public void UpdateGrade(int newGrade)
+        {
+            if (newGrade < 0 || newGrade > 100)
+                throw new Exception("Grade must be between 0 and 100.");
+
+            Grade = newGrade;
+        }
 
     }
 }

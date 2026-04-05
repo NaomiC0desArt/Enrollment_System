@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Student_Course_System.Auxiliary
+namespace UniversitySystem.Application.Auxiliary
 {
     public class Result
     {

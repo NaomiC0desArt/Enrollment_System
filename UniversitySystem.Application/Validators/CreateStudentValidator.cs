@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversitySystem.Application.Entities.DTOs.Student;
-using UniversitySystem.Application.Repositories.Interfaces;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Validators
 {

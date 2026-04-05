@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UniversitySystem.Domain.Interfaces;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Domain.Entities
 {

@@ -1,8 +1,8 @@
-﻿using Student_Course_System.Auxiliary;
-using UniversitySystem.Application.DTOs.Common;
+﻿using UniversitySystem.Application.Auxiliary;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Student;
-using UniversitySystem.Domain.Common;
+using UniversitySystem.Domain.Common.Base;
+using UniversitySystem.Domain.Common.Filters;
 
 namespace UniversitySystem.Application.Services.Interfaces
 {

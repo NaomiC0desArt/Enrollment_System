@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UniversitySystem.API.Controllers.BaseController;
 using UniversitySystem.Application.DTOs.ApiResponse;
-using UniversitySystem.Application.DTOs.Common;
 using UniversitySystem.Application.DTOs.Student;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Student;
 using UniversitySystem.Application.Services.Interfaces;
+using UniversitySystem.Domain.Common.Filters;
 
 namespace UniversitySystem.API.Controllers
 {

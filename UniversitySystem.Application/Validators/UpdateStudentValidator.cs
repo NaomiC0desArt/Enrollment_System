@@ -2,7 +2,7 @@
 
 using FluentValidation;
 using UniversitySystem.Application.DTOs.Student;
-using UniversitySystem.Application.Repositories.Interfaces;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Validators
 {

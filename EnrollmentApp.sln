@@ -12,9 +12,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.API", "Uni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.Application", "UniversitySystem.Application\UniversitySystem.Application.csproj", "{E35EACC4-438A-46E4-B51E-D5C63E9B7E8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversitySystem.Domain", "UniversitySystem.Domain\UniversitySystem.Domain.csproj", "{C090052F-494F-4D99-AFE0-9B81393E5EF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.Domain", "UniversitySystem.Domain\UniversitySystem.Domain.csproj", "{C090052F-494F-4D99-AFE0-9B81393E5EF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversitySystem.Infrastructure", "UniversitySystem.Infrastructure\UniversitySystem.Infrastructure.csproj", "{5FEEB07A-7661-429E-978B-56F12D1EB635}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.Infrastructure", "UniversitySystem.Infrastructure\UniversitySystem.Infrastructure.csproj", "{5FEEB07A-7661-429E-978B-56F12D1EB635}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversitySystem.Persistence", "UniversitySystem.Persistence\UniversitySystem.Persistence.csproj", "{04DB8BFE-7462-41AF-A9DF-3778C4003EB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{5FEEB07A-7661-429E-978B-56F12D1EB635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FEEB07A-7661-429E-978B-56F12D1EB635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FEEB07A-7661-429E-978B-56F12D1EB635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DB8BFE-7462-41AF-A9DF-3778C4003EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DB8BFE-7462-41AF-A9DF-3778C4003EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DB8BFE-7462-41AF-A9DF-3778C4003EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DB8BFE-7462-41AF-A9DF-3778C4003EB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Security.Claims;
-using UniversitySystem.Application.Services.Interfaces;
+using UniversitySystem.Domain.Interfaces.Common;
 
 namespace UniversitySystem.API.Services
 {

@@ -6,6 +6,7 @@ using UniversitySystem.Application.DTOs.ApiResponse;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Course;
 using UniversitySystem.Application.Services.Interfaces;
+using UniversitySystem.Domain.Common.Filters;
 
 namespace UniversitySystem.API.Controllers
 {
@@ -15,19 +16,25 @@ namespace UniversitySystem.API.Controllers
     {
         public ICourseService _courseService;
         private readonly IValidator<CreateCourse> _validator;
+        private readonly IValidator<CourseFilter> _filterValidator;
 
 
-        public CourseController(ICourseService courseService, IValidator<CreateCourse> validator)
+        public CourseController(ICourseService courseService, IValidator<CreateCourse> validator, IValidator<CourseFilter> filterValidator)
         {
             _courseService = courseService;
             _validator = validator;
+            _filterValidator = filterValidator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] CourseFilter filters) 
         {
-            return HandleResult(await _courseService.GetCourses());
+            var validationResult = await _filterValidator.ValidateAsync(filters);
 
+            if (!validationResult.IsValid) return HandleValidation(validationResult);
+
+            var result = await _courseService.GetCourses(filters);
+            return HandleResult(result);
         }
 
         [HttpGet("{id}")]

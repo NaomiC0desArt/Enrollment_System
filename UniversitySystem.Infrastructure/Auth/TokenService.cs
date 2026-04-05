@@ -7,8 +7,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using UniversitySystem.Application.Services.Interfaces;
 using UniversitySystem.Domain.Entities;
+using UniversitySystem.Domain.Interfaces.Common;
 
 namespace UniversitySystem.Infrastructure.Auth
 {

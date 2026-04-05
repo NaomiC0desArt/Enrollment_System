@@ -8,10 +8,11 @@ using UniversitySystem.Application.DTOs.ApiResponse;
 using UniversitySystem.Application.DTOs.User;
 using UniversitySystem.Application.Services.Interfaces;
 using UniversitySystem.Domain.Entities;
+using UniversitySystem.Domain.Interfaces.Common;
 
 namespace UniversitySystem.API.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : BaseApiController

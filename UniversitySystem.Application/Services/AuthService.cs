@@ -1,11 +1,9 @@
-﻿
-
-using Student_Course_System.Auxiliary;
+﻿using UniversitySystem.Application.Auxiliary;
 using UniversitySystem.Application.Exceptions;
-using UniversitySystem.Application.Repositories.Interfaces;
 using UniversitySystem.Application.Services.Interfaces;
 using UniversitySystem.Domain.Entities;
 using UniversitySystem.Domain.Enums;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Services
 {

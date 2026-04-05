@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Student_Course_System.Auxiliary;
 using Student_Course_System.Entities.DTOs;
+using UniversitySystem.Application.Auxiliary;
+using UniversitySystem.Application.DTOs.Enrollment;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Entities.DTOs.Course;
 using UniversitySystem.Application.Exceptions;
-using UniversitySystem.Application.Repositories.Interfaces;
 using UniversitySystem.Application.Services.Interfaces;
+using UniversitySystem.Domain.Common.Base;
+using UniversitySystem.Domain.Common.Filters;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Services
 {
@@ -29,6 +32,46 @@ namespace UniversitySystem.Application.Services
             await _unitOfWork.CompleteAsync();
 
             return Result.Success();
+        }
+
+        public async Task<Result> UpdateStudentGrade(UpdateGradeDto dto)
+        {
+            var enrollment = await _unitOfWork.Enrollments.GetByIdAsync(dto.EnrollmentId);
+
+            if (enrollment == null) return Result.Failure("Enrollment not found.");
+
+            try { enrollment.UpdateGrade(dto.NewGrade); }
+            catch(Exception ex) { return Result.Failure(ex.Message); }
+
+            await _unitOfWork.CompleteAsync();
+
+            return Result.Success();
+        }
+        public async Task<Result<PagedResult<EnrollmentResponseDto>>> GetEnrollments(EnrollmentFilter filters)
+        {
+            var pagedEntities = await _unitOfWork.Enrollments.GetEnrollmentsAsync(filters);
+
+            var dtos = pagedEntities
+                .Items.Select(e => new EnrollmentResponseDto
+                {
+                    Id = e.Id,
+                    StudentId = e.StudentId,
+                    StudentName = e.Student.Name,
+                    CourseId = e.CourseId,
+                    CourseTitle = e.Course.Title,
+                    EnrollmentDate = e.EnrollmentDate,
+                    Grade = e.Grade
+                }).ToList();
+
+            var pagedDtos = new PagedResult<EnrollmentResponseDto>
+            {
+                Items = dtos,
+                TotalCount = pagedEntities.TotalCount,
+                PageNumber = pagedEntities.PageNumber,
+                PageSize = pagedEntities.PageSize
+            };
+
+            return Result<PagedResult<EnrollmentResponseDto>>.Success(pagedDtos);
         }
 
         public async Task<Result<(string Title, List<string> students)>> ListStudentsInCourse(int courseId)
@@ -110,13 +153,15 @@ namespace UniversitySystem.Application.Services
 
         public async Task<Result<Dictionary<int, List<CourseDto>>>> CoursesGroupedByCredits()
         {
-            var courses = await _unitOfWork.Courses.GetAllAsync();
+            var filters = new CourseFilter();
 
-            if (courses == null || !courses.Any())
+            var courses = await _unitOfWork.Courses.GetAllAsync(filters);
+
+            if (courses == null || !courses.Items.Any())
                 throw new UserFriendlyException("No courses available.");
 
 
-            var result = courses.Select(c => new CourseDto
+            var result = courses.Items.Select(c => new CourseDto
             {
                 Id = c.Id,
                 Title = c.Title,

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using UniversitySystem.Application.Entities.DTOs.Course;
-using UniversitySystem.Application.Repositories.Interfaces;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Validators
 {

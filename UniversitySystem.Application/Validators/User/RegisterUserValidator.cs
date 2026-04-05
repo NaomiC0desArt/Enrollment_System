@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UniversitySystem.Application.DTOs.User;
-using UniversitySystem.Application.Repositories.Interfaces;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Validators.User
 {

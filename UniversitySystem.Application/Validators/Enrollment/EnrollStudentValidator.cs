@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using UniversitySystem.Application.DTOs.Enrollment;
-using UniversitySystem.Application.Repositories.Interfaces;
+using UniversitySystem.Domain.Interfaces.Repositories;
 
 namespace UniversitySystem.Application.Validators.Enrollment
 {
@@ -28,7 +28,7 @@ namespace UniversitySystem.Application.Validators.Enrollment
                 .WithMessage("The course does not exists");
 
             RuleFor(x => x)
-                .MustAsync(async (request, cancellation) =>await _unitOfWork.Enrollments.IsEnrolledAsync(request.StudentId, request.CourseId))
+                .MustAsync(async (request, cancellation) => !await _unitOfWork.Enrollments.IsEnrolledAsync(request.StudentId, request.CourseId))
                 .WithMessage("Student is already enrolled in this course.");
 
         }

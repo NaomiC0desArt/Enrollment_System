@@ -1,14 +1,14 @@
-﻿using Student_Course_System.Auxiliary;
-using Student_Course_System.Entities.DTOs;
+﻿using Student_Course_System.Entities.DTOs;
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Application.Services.Interfaces;
 using UniversitySystem.Application.Entities.DTOs.Student;
-using UniversitySystem.Application.Repositories.Interfaces;
 using System.Net;
 using UniversitySystem.Application.Exceptions;
 using System.Net.Http.Headers;
-using UniversitySystem.Domain.Common;
-using UniversitySystem.Application.DTOs.Common;
+using UniversitySystem.Domain.Interfaces.Repositories;
+using UniversitySystem.Domain.Common.Base;
+using UniversitySystem.Domain.Common.Filters;
+using UniversitySystem.Application.Auxiliary;
 
 namespace Student_Course_System.Services
 {

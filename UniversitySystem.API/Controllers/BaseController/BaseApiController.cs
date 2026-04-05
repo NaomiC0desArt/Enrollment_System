@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Student_Course_System.Auxiliary;
+using UniversitySystem.Application.Auxiliary;
 using UniversitySystem.Application.DTOs.ApiResponse;
 
 namespace UniversitySystem.API.Controllers.BaseController
@@ -28,6 +28,20 @@ namespace UniversitySystem.API.Controllers.BaseController
             return BadRequest(ApiResponse<string>.Fail(result.Error));
         }
 
+        protected IActionResult HandleResult(Result result)
+        {
+            if (result == null) return NotFound(ApiResponse<string>.Fail("Resource Not Found"));
+
+            if (result.IsSuccess)
+            {
+                return Ok(ApiResponse<object>.Ok(null, "Operation successful"));
+            }
+
+            if (result.Error.Contains("not found", StringComparison.OrdinalIgnoreCase))
+                return NotFound(ApiResponse<string>.Fail(result.Error));
+
+            return BadRequest(ApiResponse<string>.Fail(result.Error));
+        }
         protected IActionResult HandleValidation(FluentValidation.Results.ValidationResult result)
         {
             if (result.IsValid) return null;
