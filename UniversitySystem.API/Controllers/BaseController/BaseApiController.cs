@@ -34,7 +34,8 @@ namespace UniversitySystem.API.Controllers.BaseController
 
             if (result.IsSuccess)
             {
-                return Ok(ApiResponse<object>.Ok(null, "Operation successful"));
+                var successMessage = result.Message ?? "Operation successful";
+                return Ok(ApiResponse<object>.Ok(null, successMessage));
             }
 
             if (result.Error.Contains("not found", StringComparison.OrdinalIgnoreCase))

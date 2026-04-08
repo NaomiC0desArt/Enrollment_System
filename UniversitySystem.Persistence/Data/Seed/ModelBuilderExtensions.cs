@@ -29,7 +29,9 @@ namespace UniversitySystem.Infrastructure.Data.Seed
             IsDeleted = false,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
-            IsActive = true
+            IsActive = true,
+            EmailConfirmed = true,
+            FailedLoginAttempts = 0
             }
                 );
         }

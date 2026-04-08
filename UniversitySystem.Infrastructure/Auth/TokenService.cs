@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using UniversitySystem.Domain.Entities;
@@ -47,6 +48,14 @@ namespace UniversitySystem.Infrastructure.Auth
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public string GenerateRefreshToken()
+        {
+            byte[] randomNumber = new byte[64];
+
+            RandomNumberGenerator.Fill(randomNumber);
+            return Convert.ToBase64String(randomNumber);
         }
     }
 }

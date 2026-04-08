@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.15.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.25" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UniversitySystem.Application\UniversitySystem.Application.csproj" />
     <ProjectReference Include="..\UniversitySystem.Domain\UniversitySystem.Domain.csproj" />
   </ItemGroup>
 

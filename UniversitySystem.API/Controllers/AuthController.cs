@@ -20,12 +20,18 @@ namespace UniversitySystem.API.Controllers
         public IAuthService _authService;
         public ITokenService _tokenService;
         private readonly IValidator<CreateUser> _validator;
+        private readonly IValidator<ResetPasswordDto> _resetPasswordValidator;
 
-        public AuthController(IAuthService authService, ITokenService tokenService, IValidator<CreateUser> validator)
+        public AuthController(IAuthService authService, 
+            ITokenService tokenService, 
+            IValidator<CreateUser> validator,
+            IValidator<ResetPasswordDto> resetPasswordValidator
+            )
         {
             _authService = authService;
             _tokenService = tokenService;
             _validator = validator;
+            _resetPasswordValidator = resetPasswordValidator;
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register(CreateUser createUser)
@@ -34,18 +40,45 @@ namespace UniversitySystem.API.Controllers
             if (validation != null) return validation;
 
             var result = await _authService.Register(createUser.Email, createUser.Password, createUser.UserRole);
-            return Ok(ApiResponse<User>.Ok(result.Value, "User registered successfully!"));
+            return HandleResult(result);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginDto request)
         {
-            var user = await _authService.Login(request.Email, request.Password);
-            var token = _tokenService.CreateToken(user.Value);
+            var result = await _authService.Login(request.Email, request.Password);
+            return HandleResult(result);
+        }
 
-            return Ok(new { Token = token });
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string token)
+        {
+            var result = await _authService.ConfirmEmail(email, token);
+            return HandleResult(result);
+        }
 
-            
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromQuery] string email)
+        {
+            var result = await _authService.ForgotPassword(email);
+            return HandleResult(result);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto request)
+        {
+            var validation = HandleValidation(await _resetPasswordValidator.ValidateAsync(request));
+            if (validation != null) return validation;
+
+            var result = await _authService.ResetPassword(request);
+            return HandleResult(result);
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
+        {
+            var result = await _authService.RefreshToken(refreshToken);
+            return HandleResult(result);
         }
     }
 }

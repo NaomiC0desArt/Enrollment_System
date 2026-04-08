@@ -18,6 +18,8 @@ using UniversitySystem.Domain.Interfaces.Common;
 using UniversitySystem.Domain.Interfaces.Repositories;
 using UniversitySystem.Persistence.Data;
 using UniversitySystem.Persistence.UnitOfWork;
+using UniversitySystem.Application.Interfaces.Auth;
+using UniversitySystem.Infrastructure.Email;
 #endregion
 
 namespace UniversitySystem.API.Extensions
@@ -83,6 +85,7 @@ options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAuthorization();
 
+            services.AddScoped<IEmailService, EmailService>();
             return services;
         }
 

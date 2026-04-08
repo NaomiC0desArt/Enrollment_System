@@ -5,5 +5,6 @@ namespace UniversitySystem.Domain.Interfaces.Common
     public interface ITokenService
     {
         string CreateToken(User user);
+        string GenerateRefreshToken();
     }
 }

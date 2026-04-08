@@ -7,5 +7,6 @@ namespace UniversitySystem.Domain.Interfaces.Repositories
         Task<User> GetByEmail(string email);
         Task Add(User user);
         Task<bool> ExistByEmail(string email);
+        Task<User> GetByRefreshToken(string refreshToken);
     }
 }

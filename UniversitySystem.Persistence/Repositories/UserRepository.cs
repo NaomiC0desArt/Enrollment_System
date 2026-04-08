@@ -30,7 +30,12 @@ namespace UniversitySystem.Infrastructure.Repositories
 
         public async Task<User> GetByEmail(string email)
         {
-            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<User> GetByRefreshToken(string refreshToken)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
         }
     }
 }

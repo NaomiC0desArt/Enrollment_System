@@ -10,14 +10,16 @@ namespace UniversitySystem.Application.Auxiliary
     {
         public bool IsSuccess { get; }
         public string Error { get; }
+        public string Message { get; }
 
-        protected Result(bool success, string error)
+        protected Result(bool success, string error, string message = null)
         {
             IsSuccess = success;
             Error = error;
+            Message = message;
         }
 
-        public static Result Success() => new Result(true, null);
+        public static Result Success(string message = null) => new Result(true, null, message);
         public static Result Failure(string error) => new Result(false, error);
     }
 
