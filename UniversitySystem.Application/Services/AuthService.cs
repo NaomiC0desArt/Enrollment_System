@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using System.Security.Cryptography;
+using System.Text;
 using UniversitySystem.Application.Auxiliary;
 using UniversitySystem.Application.DTOs.User;
 using UniversitySystem.Application.Exceptions;
+using UniversitySystem.Application.Helpers;
 using UniversitySystem.Application.Interfaces.Auth;
 using UniversitySystem.Application.Services.Interfaces;
 using UniversitySystem.Domain.Entities;
@@ -16,14 +19,17 @@ namespace UniversitySystem.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailService _emailService;
         private readonly ITokenService _tokenService;
+        
 
         public AuthService(IUnitOfWork unitOfWork,
             IEmailService emailService,
-            ITokenService tokenService)
+            ITokenService tokenService
+            )
         {
             _unitOfWork = unitOfWork;
             _emailService = emailService;
             _tokenService = tokenService;
+            
         }
 
         public async Task<Result<AuthResponseDto>> Login(string email, string password)
@@ -37,6 +43,7 @@ namespace UniversitySystem.Application.Services
 
             if (userInDb.LockoutEnd > DateTime.UtcNow)
                 return Result<AuthResponseDto>.Failure("Account is temporarily blocked.");
+
 
             bool isCorrect = BCrypt.Net.BCrypt.Verify(password, userInDb.PasswordHash);
             if (!isCorrect)
@@ -58,7 +65,8 @@ namespace UniversitySystem.Application.Services
             var result = new AuthResponseDto
             {
                 AccessToken = accessToken,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                MustChangePassword = userInDb.MustChangePassword
             };
 
             return Result<AuthResponseDto>.Success(result);
@@ -87,22 +95,24 @@ namespace UniversitySystem.Application.Services
             });
 
         }
-        public async Task<Result<User>> Register(string email, string password, Role rol)
+        public async Task<Result<User>> Register(string email, string password, Role rol, bool saveChanges = true)
         {
-            var emailToken = Guid.NewGuid().ToString();
+            var emailToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+            var hashedToken = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(emailToken)));
 
             string hashPassword = BCrypt.Net.BCrypt.HashPassword(password);
             var user = new User(email, hashPassword, rol);
 
             user.EmailConfirmed = false;
-            user.EmailConfirmationToken = emailToken;
+            user.EmailConfirmationToken = hashedToken;
             user.EmailConfirmationTokenExpiry = DateTime.UtcNow.AddHours(24);
+            user.MustChangePassword = (rol.ToString().ToLower() == "student") ? true : false;
 
             await _unitOfWork.Users.Add(user);
-            await _unitOfWork.CompleteAsync();
+            if(saveChanges) await _unitOfWork.CompleteAsync();
 
-            await _emailService.SendConfirmationEmailAsync(user.Email, user.EmailConfirmationToken);
-
+            await _emailService.SendConfirmationEmailAsync(user.Email, emailToken, rol.ToString(), password);
+            
             return Result<User>.Success(user);
 
         }
@@ -113,12 +123,13 @@ namespace UniversitySystem.Application.Services
             
             if (user!= null)
             {
-                var token = Guid.NewGuid().ToString();
-                user.PasswordResetToken = token;
+                var rawToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+                var hashedToken = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(rawToken)));
+                user.PasswordResetToken = hashedToken;
                 user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(2);
                 await _unitOfWork.CompleteAsync();
 
-                await _emailService.SendPasswordResetEmailAsync(user.Email, token);
+                await _emailService.SendPasswordResetEmailAsync(user.Email, hashedToken);
             }
 
             return Result.Success("If an account exists, an email has been sent.");
@@ -147,8 +158,9 @@ namespace UniversitySystem.Application.Services
             if (user == null)
                 return Result.Failure("The user is not registered in the system.");
 
-            
-            if (user.EmailConfirmationToken != token)
+            var hashedInput = Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
+
+            if (user.EmailConfirmationToken != hashedInput)
                 return Result.Failure("The token does not match.");
 
             

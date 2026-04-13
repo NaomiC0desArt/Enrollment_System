@@ -2,6 +2,7 @@
 using UniversitySystem.Application.Entities;
 using UniversitySystem.Domain.Common.Base;
 using UniversitySystem.Domain.Common.Filters;
+using UniversitySystem.Domain.Entities;
 using UniversitySystem.Domain.Interfaces.Repositories;
 using UniversitySystem.Persistence.Data;
 using UniversitySystem.Persistence.Features.Students;
@@ -27,6 +28,7 @@ namespace UniversitySystem.Application.Repositories
                 .AsNoTracking()
                 .Include(s => s.Enrollments)
                 .ThenInclude(e => e.Course)
+                .Include(s => s.User)
                 .ToListAsync();
         }
 
@@ -35,6 +37,7 @@ namespace UniversitySystem.Application.Repositories
             return await _context.Students
                 .Include(s => s.Enrollments)
                 .ThenInclude(e => e.Course)
+                .Include(s => s.User)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
         public async Task SaveChangesAsync()
@@ -51,6 +54,7 @@ namespace UniversitySystem.Application.Repositories
                 .AsNoTracking()
                 .Include(s => s.Enrollments)
                 .ThenInclude(e => e.Course)
+                .Include(s => s.User)
                 .ApplyFilters(filters)
                 .ApplySorting(filters.SortBy, filters.IsDescending);
 
@@ -73,6 +77,7 @@ namespace UniversitySystem.Application.Repositories
         public async Task<List<Student>> GetStudentsWithEnrollmentsAsync()
         {
             return await _context.Students
+                .Include(s => s.User)
                 .Include(s => s.Enrollments)
                 .Where(s => s.Enrollments.Any()) 
                 .ToListAsync();

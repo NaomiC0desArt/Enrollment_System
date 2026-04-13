@@ -4,7 +4,7 @@ using UniversitySystem.Domain.Entities;
 namespace UniversitySystem.Application.Entities
 {
 
-    public class Enrollment
+    public class Enrollment: BaseEntity
     {
         public int Id { get; set; }
         public int StudentId { get; set; }
@@ -27,6 +27,8 @@ namespace UniversitySystem.Application.Entities
             StudentId = student.Id; 
             CourseId = course.Id;
             EnrollmentDate = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public void setGrade(int grade)

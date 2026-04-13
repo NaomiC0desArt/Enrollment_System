@@ -31,7 +31,8 @@ namespace UniversitySystem.Infrastructure.Data.Seed
             UpdatedAt = DateTime.UtcNow,
             IsActive = true,
             EmailConfirmed = true,
-            FailedLoginAttempts = 0
+            FailedLoginAttempts = 0,
+            MustChangePassword = false
             }
                 );
         }

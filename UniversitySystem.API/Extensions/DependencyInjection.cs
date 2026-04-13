@@ -20,6 +20,7 @@ using UniversitySystem.Persistence.Data;
 using UniversitySystem.Persistence.UnitOfWork;
 using UniversitySystem.Application.Interfaces.Auth;
 using UniversitySystem.Infrastructure.Email;
+using UniversitySystem.Application.Helpers;
 #endregion
 
 namespace UniversitySystem.API.Extensions
@@ -53,6 +54,7 @@ namespace UniversitySystem.API.Extensions
             services.AddScoped<IEnrollmentService, EnrollmentService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<PasswordGenerator>();
 
             return services;
         }

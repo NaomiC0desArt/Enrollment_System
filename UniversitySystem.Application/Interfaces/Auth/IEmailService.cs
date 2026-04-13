@@ -9,7 +9,7 @@ namespace UniversitySystem.Application.Interfaces.Auth
 {
     public interface IEmailService
     {
-        Task<Result> SendConfirmationEmailAsync(string email, string token);
+        Task<Result> SendConfirmationEmailAsync(string email, string token, string rol, string? password);
         Task<Result> SendPasswordResetEmailAsync(string email, string token);
     }
 }

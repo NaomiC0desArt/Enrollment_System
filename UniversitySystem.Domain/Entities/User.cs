@@ -18,6 +18,8 @@ namespace UniversitySystem.Domain.Entities
 
         public Role Role { get; set; }
 
+        public bool MustChangePassword { get; set; } = false;
+
         public bool EmailConfirmed { get; set; } = false;
         public string? EmailConfirmationToken { get; set; }
         public DateTime? EmailConfirmationTokenExpiry { get; set; }

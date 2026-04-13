@@ -17,7 +17,7 @@ namespace UniversitySystem.Infrastructure.Email
             _config = config;
         }
 
-        public async Task<Result> SendConfirmationEmailAsync(string email, string token)
+        public async Task<Result> SendConfirmationEmailAsync(string email, string token, string rol, string? password)
         {
             var baseUrl = _config["ApiSettings:BaseUrl"];
             var safeToken = Uri.EscapeDataString(token);
@@ -41,6 +41,22 @@ namespace UniversitySystem.Infrastructure.Email
                 <p>If the link doesn't work, copy and paste this: {link}"
                 
             };
+
+            if (rol.ToLower() == "student")
+            {
+                bodyBuilder = new BodyBuilder
+                {
+                    HtmlBody = $@"
+                <h1>Welcome to the enrollment system!!</h1>
+                <p>This is your temporary password: <strong>{password}</strong></p>
+                <p><em>Remeber to change it after your first login</em></p>
+                <br>
+                <p>Please click the link below to confirm you account:</p>
+                <a href='{link}'>Confirm My Account</a>
+                <p>If the link doesn't work, copy and paste this: {link}"
+
+                };
+            }
 
             message.Body = bodyBuilder.ToMessageBody();
 

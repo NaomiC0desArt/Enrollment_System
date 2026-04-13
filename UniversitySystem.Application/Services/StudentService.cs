@@ -9,16 +9,26 @@ using UniversitySystem.Domain.Interfaces.Repositories;
 using UniversitySystem.Domain.Common.Base;
 using UniversitySystem.Domain.Common.Filters;
 using UniversitySystem.Application.Auxiliary;
+using UniversitySystem.Domain.Entities;
+using UniversitySystem.Application.Helpers;
+using UniversitySystem.Domain.Enums;
 
 namespace Student_Course_System.Services
 {
     public class StudentService : IStudentService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly PasswordGenerator _passwordGenerator;
+        private readonly IAuthService _authService;
 
-    public StudentService(IUnitOfWork unitOfWork)
+        public StudentService(IUnitOfWork unitOfWork,
+            PasswordGenerator passwordGenerator,
+            IAuthService authService
+            )
         {
             _unitOfWork = unitOfWork;
+            _passwordGenerator = passwordGenerator;
+            _authService = authService;
         }
 
         public async Task<Result<List<StudentResponseDto>>> GetStudents()
@@ -85,8 +95,12 @@ namespace Student_Course_System.Services
         } 
         public async Task<Result<Student>> RegisterStudent(string name, string email)
         {
+            var password = _passwordGenerator.GeneratePassword();
+            var user = await _authService.Register(email, password, Role.Student, saveChanges: false);
 
-            Student student = new Student(name, email);
+            if (!user.IsSuccess) return Result<Student>.Failure(user.Message);
+
+            Student student = new Student(name, email, user.Value.Id);
 
             await _unitOfWork.Students.AddAsync(student);
             await _unitOfWork.CompleteAsync();
@@ -97,9 +111,18 @@ namespace Student_Course_System.Services
         public async Task<Result<bool>> DeleteStudent(int id)
         {
             var student = await _unitOfWork.Students.GetByIdAsync(id);
-            if(student == null) throw new UserFriendlyException("Student not found", HttpStatusCode.NotFound);
+            if(student == null) return Result<bool>.Failure("Student not found");
 
-            _unitOfWork.Students.Delete(student);
+            student.IsDeleted = true;
+
+            if (student.User != null)
+                student.User.IsDeleted = true;
+
+            foreach (var enrollment in student.Enrollments)
+            {
+                enrollment.IsDeleted = true;
+            }
+
             await _unitOfWork.CompleteAsync();
 
             return Result<bool>.Success(true);

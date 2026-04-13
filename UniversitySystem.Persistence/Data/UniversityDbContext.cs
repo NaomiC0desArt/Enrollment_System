@@ -34,6 +34,7 @@ namespace UniversitySystem.Persistence.Data
                 entity.Property(s => s.Email).IsRequired().HasMaxLength(150);
 
                 entity.HasIndex(s => s.Email).IsUnique();
+                entity.HasQueryFilter(s => !s.IsDeleted);
             });
 
             modelBuilder.Entity<Course>(entity =>
@@ -58,6 +59,8 @@ namespace UniversitySystem.Persistence.Data
                 .WithMany(c => c.Enrollments)
                 .HasForeignKey(e => e.CourseId);
 
+                entity.HasQueryFilter(u => !u.IsDeleted);
+
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -69,6 +72,10 @@ namespace UniversitySystem.Persistence.Data
                 entity.HasIndex(u => u.Email).IsUnique();
 
                 entity.HasQueryFilter(u => !u.IsDeleted);
+
+                entity.Property(u => u.Role)
+                .HasConversion<string>()
+                .HasMaxLength(20);
             });
             #endregion
 
