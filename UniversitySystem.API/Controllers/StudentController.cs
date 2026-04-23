@@ -11,7 +11,7 @@ using UniversitySystem.Domain.Common.Filters;
 
 namespace UniversitySystem.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : BaseApiController
@@ -83,7 +83,7 @@ namespace UniversitySystem.API.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

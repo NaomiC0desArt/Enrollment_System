@@ -21,6 +21,8 @@ using UniversitySystem.Persistence.UnitOfWork;
 using UniversitySystem.Application.Interfaces.Auth;
 using UniversitySystem.Infrastructure.Email;
 using UniversitySystem.Application.Helpers;
+using Serilog;
+using System.Reflection;
 #endregion
 
 namespace UniversitySystem.API.Extensions
@@ -95,36 +97,44 @@ options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         {
             services.AddSwaggerGen(opt =>
             {
-                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "University API", Version = "v1" });
+                opt.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Enrollment API",
+                        Version = "v1",
+                        Description = "API for managing enrollments, students, and courses"
+                    });
 
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "Please enter token (Format: 'Bearer {token}')",
+                    Description = "Enter your JWT token. Format: 'Bearer {token}'",
                     Name = "Authorization",
                     Type = SecuritySchemeType.Http,
                     BearerFormat = "JWT",
                     Scheme = "bearer"
                 });
 
-                opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[]{}
-        }
-    });
+                opt.OperationFilter<AuthOperationFilter>();
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                opt.IncludeXmlComments(xmlPath);
             });
 
-            return services;
+          return services;
     
+        }
+
+        public static IHostBuilder AddSerilogConfig(this IHostBuilder host)
+        {
+            host.UseSerilog((context, loggerConfiguration) =>
+            {
+                loggerConfiguration.ReadFrom.Configuration(context.Configuration);
+            });
+
+            return host;
         }
     }
 }

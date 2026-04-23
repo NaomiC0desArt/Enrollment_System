@@ -5,7 +5,10 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CAA75C5-F757-40C3-AAF0-96D0D8080D05}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.gitignore = .gitignore
+		UniversitySystem.API\compose.yaml = UniversitySystem.API\compose.yaml
+		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.API", "UniversitySystem.API\UniversitySystem.API.csproj", "{21E8BF39-3852-4E74-A848-E5A3CF963779}"
@@ -16,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.Domain", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.Infrastructure", "UniversitySystem.Infrastructure\UniversitySystem.Infrastructure.csproj", "{5FEEB07A-7661-429E-978B-56F12D1EB635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversitySystem.Persistence", "UniversitySystem.Persistence\UniversitySystem.Persistence.csproj", "{04DB8BFE-7462-41AF-A9DF-3778C4003EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversitySystem.Persistence", "UniversitySystem.Persistence\UniversitySystem.Persistence.csproj", "{04DB8BFE-7462-41AF-A9DF-3778C4003EB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

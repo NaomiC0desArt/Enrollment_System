@@ -1,0 +1,86 @@
+2026-04-14 08:12:33.418 -04:00 [INF] Now listening on: https://localhost:7035
+2026-04-14 08:12:33.470 -04:00 [INF] Now listening on: http://localhost:5238
+2026-04-14 08:12:33.625 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-14 08:12:33.628 -04:00 [INF] Hosting environment: Development
+2026-04-14 08:12:33.630 -04:00 [INF] Content root path: C:\Users\user\OneDrive - Instituto Tecnológico de Las Américas (ITLA)\Escritorio\Coding shit\.NET shit\Entity_Framework\EnrollmentApp\UniversitySystem.API
+2026-04-14 08:27:55.885 -04:00 [INF] Now listening on: https://localhost:7035
+2026-04-14 08:27:55.927 -04:00 [INF] Now listening on: http://localhost:5238
+2026-04-14 08:27:56.053 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-14 08:27:56.056 -04:00 [INF] Hosting environment: Development
+2026-04-14 08:27:56.058 -04:00 [INF] Content root path: C:\Users\user\OneDrive - Instituto Tecnológico de Las Américas (ITLA)\Escritorio\Coding shit\.NET shit\Entity_Framework\EnrollmentApp\UniversitySystem.API
+2026-04-14 08:31:53.287 -04:00 [INF] Now listening on: https://localhost:7035
+2026-04-14 08:31:53.326 -04:00 [INF] Now listening on: http://localhost:5238
+2026-04-14 08:31:53.455 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-14 08:31:53.458 -04:00 [INF] Hosting environment: Development
+2026-04-14 08:31:53.459 -04:00 [INF] Content root path: C:\Users\user\OneDrive - Instituto Tecnológico de Las Américas (ITLA)\Escritorio\Coding shit\.NET shit\Entity_Framework\EnrollmentApp\UniversitySystem.API
+2026-04-14 08:40:07.595 -04:00 [INF] Now listening on: https://localhost:7035
+2026-04-14 08:40:07.666 -04:00 [INF] Now listening on: http://localhost:5238
+2026-04-14 08:40:07.825 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-14 08:40:07.827 -04:00 [INF] Hosting environment: Development
+2026-04-14 08:40:07.829 -04:00 [INF] Content root path: C:\Users\user\OneDrive - Instituto Tecnológico de Las Américas (ITLA)\Escritorio\Coding shit\.NET shit\Entity_Framework\EnrollmentApp\UniversitySystem.API
+2026-04-14 08:50:32.174 -04:00 [INF] Executed DbCommand (191ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[IsDeleted] = CAST(0 AS bit) AND [u].[Email] = @__email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-04-14 08:50:42.476 -04:00 [INF] Executed DbCommand (4ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[IsDeleted] = CAST(0 AS bit) AND [u].[Email] = @__email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-04-14 08:50:43.611 -04:00 [INF] Executed DbCommand (25ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (Size = 255), @p4='?' (Size = 4000), @p5='?' (DbType = DateTime2), @p6='?' (DbType = Boolean), @p7='?' (DbType = Int32), @p8='?' (DbType = Boolean), @p9='?' (DbType = Boolean), @p10='?' (DbType = DateTime2), @p11='?' (DbType = Boolean), @p12='?' (Size = 255), @p13='?' (Size = 4000), @p14='?' (DbType = DateTime2), @p15='?' (Size = 4000), @p16='?' (DbType = DateTime2), @p17='?' (Size = 20), @p18='?' (DbType = DateTime2), @p19='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([Id], [CreatedAt], [CreatedBy], [Email], [EmailConfirmationToken], [EmailConfirmationTokenExpiry], [EmailConfirmed], [FailedLoginAttempts], [IsActive], [IsDeleted], [LockoutEnd], [MustChangePassword], [PasswordHash], [PasswordResetToken], [PasswordResetTokenExpiry], [RefreshToken], [RefreshTokenExpiry], [Role], [UpdatedAt], [UpdatedBy])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19);
+2026-04-14 08:50:43.639 -04:00 [INF] New "Student" registered: Rata@gmail.com
+2026-04-14 08:50:44.890 -04:00 [INF] Confirmation email sent to Rata@gmail.com
+2026-04-14 08:50:53.240 -04:00 [INF] Executed DbCommand (18ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[CreatedBy], [u].[Email], [u].[EmailConfirmationToken], [u].[EmailConfirmationTokenExpiry], [u].[EmailConfirmed], [u].[FailedLoginAttempts], [u].[IsActive], [u].[IsDeleted], [u].[LockoutEnd], [u].[MustChangePassword], [u].[PasswordHash], [u].[PasswordResetToken], [u].[PasswordResetTokenExpiry], [u].[RefreshToken], [u].[RefreshTokenExpiry], [u].[Role], [u].[UpdatedAt], [u].[UpdatedBy]
+FROM [Users] AS [u]
+WHERE [u].[IsDeleted] = CAST(0 AS bit) AND [u].[Email] = @__email_0
+2026-04-14 08:50:53.286 -04:00 [INF] Executed DbCommand (17ms) [Parameters=[@p4='?' (DbType = Guid), @p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [EmailConfirmationToken] = @p0, [EmailConfirmationTokenExpiry] = @p1, [EmailConfirmed] = @p2, [UpdatedAt] = @p3
+OUTPUT 1
+WHERE [Id] = @p4;
+2026-04-14 08:50:53.295 -04:00 [INF] The account for Rata@gmail.com has been activated at "2026-04-14T12:50:53.2952352Z"
+2026-04-14 08:51:14.764 -04:00 [INF] Executed DbCommand (6ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[CreatedBy], [u].[Email], [u].[EmailConfirmationToken], [u].[EmailConfirmationTokenExpiry], [u].[EmailConfirmed], [u].[FailedLoginAttempts], [u].[IsActive], [u].[IsDeleted], [u].[LockoutEnd], [u].[MustChangePassword], [u].[PasswordHash], [u].[PasswordResetToken], [u].[PasswordResetTokenExpiry], [u].[RefreshToken], [u].[RefreshTokenExpiry], [u].[Role], [u].[UpdatedAt], [u].[UpdatedBy]
+FROM [Users] AS [u]
+WHERE [u].[IsDeleted] = CAST(0 AS bit) AND [u].[Email] = @__email_0
+2026-04-14 08:51:15.037 -04:00 [INF] Executed DbCommand (5ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [RefreshToken] = @p0, [RefreshTokenExpiry] = @p1, [UpdatedAt] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2026-04-14 08:51:15.043 -04:00 [INF] The user Rata@gmail.com has logged in at "2026-04-14T12:51:15.0434297Z"
+2026-04-14 13:08:26.594 -04:00 [INF] Now listening on: https://localhost:7035
+2026-04-14 13:08:26.647 -04:00 [INF] Now listening on: http://localhost:5238
+2026-04-14 13:08:26.763 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-14 13:08:26.766 -04:00 [INF] Hosting environment: Development
+2026-04-14 13:08:26.768 -04:00 [INF] Content root path: C:\Users\user\OneDrive - Instituto Tecnológico de Las Américas (ITLA)\Escritorio\Coding shit\.NET shit\Entity_Framework\EnrollmentApp\UniversitySystem.API
+2026-04-14 13:13:42.989 -04:00 [INF] Executed DbCommand (112ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[CreatedBy], [u].[Email], [u].[EmailConfirmationToken], [u].[EmailConfirmationTokenExpiry], [u].[EmailConfirmed], [u].[FailedLoginAttempts], [u].[IsActive], [u].[IsDeleted], [u].[LockoutEnd], [u].[MustChangePassword], [u].[PasswordHash], [u].[PasswordResetToken], [u].[PasswordResetTokenExpiry], [u].[RefreshToken], [u].[RefreshTokenExpiry], [u].[Role], [u].[UpdatedAt], [u].[UpdatedBy]
+FROM [Users] AS [u]
+WHERE [u].[IsDeleted] = CAST(0 AS bit) AND [u].[Email] = @__email_0
+2026-04-14 13:13:43.175 -04:00 [WRN] Email confirmation token mismatch for Usuario@gmail.com
+2026-04-14 13:24:06.060 -04:00 [INF] Executed DbCommand (5ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[CreatedBy], [u].[Email], [u].[EmailConfirmationToken], [u].[EmailConfirmationTokenExpiry], [u].[EmailConfirmed], [u].[FailedLoginAttempts], [u].[IsActive], [u].[IsDeleted], [u].[LockoutEnd], [u].[MustChangePassword], [u].[PasswordHash], [u].[PasswordResetToken], [u].[PasswordResetTokenExpiry], [u].[RefreshToken], [u].[RefreshTokenExpiry], [u].[Role], [u].[UpdatedAt], [u].[UpdatedBy]
+FROM [Users] AS [u]
+WHERE [u].[IsDeleted] = CAST(0 AS bit) AND [u].[Email] = @__email_0
+2026-04-14 13:24:06.616 -04:00 [INF] Executed DbCommand (11ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (Size = 4000), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [RefreshToken] = @p0, [RefreshTokenExpiry] = @p1, [UpdatedAt] = @p2
+OUTPUT 1
+WHERE [Id] = @p3;
+2026-04-14 13:24:06.637 -04:00 [INF] The user Rata@gmail.com has logged in at "2026-04-14T17:24:06.6376274Z"

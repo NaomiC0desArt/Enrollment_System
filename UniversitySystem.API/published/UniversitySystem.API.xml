@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UniversitySystem.API</name>
+    </assembly>
+    <members>
+        <member name="M:UniversitySystem.API.Controllers.AuthController.Register(UniversitySystem.Application.DTOs.User.CreateUser)">
+            <summary>
+            Registers a new user account
+            </summary>
+            <remarks>Creates a new user identity in the system with a specified role. This endpoint triggers an email confirmation flow if enabled. It validates the input against password complexity and email format rules.</remarks>
+            <param name="createUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UniversitySystem.API.Controllers.AuthController.Login(UniversitySystem.Application.DTOs.User.UserLoginDto)">
+            <summary>
+            Authenticates a user and returns access and refresh tokens.
+            </summary>
+            <remarks>
+            The access token expires in 15 minutes.
+            Use the refresh token endpoint to get a new one without logging in again.
+            </remarks>
+            <response code="200">Login successful, tokens returned</response>
+            <response code="401">Invalid credentials or account not confirmed</response>
+            <response code="403">Account is temporarily locked</response>
+        </member>
+        <member name="M:UniversitySystem.API.Controllers.AuthController.ConfirmEmail(System.String,System.String)">
+            <summary>
+            Verifies a user's email address.
+            </summary>
+            <remarks>Validates a unique token sent to the user's email. This is a critical step to activate the account and permit future logins.</remarks>
+            <param name="email"></param>
+            <param name="token"></param>
+            <response code="200">Your email has been confirmed!</response>
+            <returns></returns>
+        </member>
+        <member name="M:UniversitySystem.API.Controllers.AuthController.ForgotPassword(UniversitySystem.Application.DTOs.User.ForgotPasswordDto)">
+            <summary>
+            Initiates the password recovery process.
+            </summary>
+            <remarks>Accepts a registered email address and, if the user exists, generates a secure password reset token sent via email.</remarks>
+            <param name="email"></param>
+            <response code="200">An email has been send.</response>
+            <returns></returns>
+        </member>
+        <member name="M:UniversitySystem.API.Controllers.AuthController.ResetPassword(UniversitySystem.Application.DTOs.User.ResetPasswordDto)">
+            <summary>
+            Updates a user's password using a reset token.
+            </summary>
+            <remarks>Finalizes the recovery process. It validates the provided reset token and updates the user's password to the new value provided in the request body.</remarks>
+            <param name="request"></param>
+            <response code="200">The password has been changed.</response>
+            <returns></returns>
+        </member>
+        <member name="M:UniversitySystem.API.Controllers.AuthController.RefreshToken">
+            <summary>
+            Issues a new JWT access token.
+            </summary>
+            <remarks>Exchange a valid, non-expired Refresh Token for a brand new Access Token (JWT). This allows users to stay logged in without re-entering credentials once their short-lived access token expires.</remarks>
+            <param name="refreshToken"></param>
+            <response code="200">The token has been refreshed</response>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,10 @@
+2026-04-22 11:13:19.245 -04:00 [INF] Now listening on: http://localhost:5238
+2026-04-22 11:13:19.338 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-22 11:13:19.344 -04:00 [INF] Hosting environment: Development
+2026-04-22 11:13:19.349 -04:00 [INF] Content root path: C:\Users\user\OneDrive - Instituto Tecnológico de Las Américas (ITLA)\Escritorio\Coding shit\.NET shit\Entity_Framework\EnrollmentApp\UniversitySystem.API
+2026-04-22 11:13:34.836 -04:00 [INF] Application is shutting down...
+2026-04-22 11:26:30.529 -04:00 [INF] Now listening on: https://localhost:7035
+2026-04-22 11:26:30.656 -04:00 [INF] Now listening on: http://localhost:5238
+2026-04-22 11:26:30.956 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-04-22 11:26:30.960 -04:00 [INF] Hosting environment: Development
+2026-04-22 11:26:30.964 -04:00 [INF] Content root path: C:\Users\user\OneDrive - Instituto Tecnológico de Las Américas (ITLA)\Escritorio\Coding shit\.NET shit\Entity_Framework\EnrollmentApp\UniversitySystem.API

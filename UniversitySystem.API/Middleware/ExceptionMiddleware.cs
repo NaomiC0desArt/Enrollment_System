@@ -24,6 +24,11 @@ namespace UniversitySystem.API.Middleware
             try
             {
                 await _next(context);
+
+                if (context.Response.StatusCode >= 400 && !context.Response.HasStarted)
+                {
+                    await HandleStatusCodeAsync(context);
+                }
             }
             catch(Exception ex)
             {
@@ -63,6 +68,21 @@ namespace UniversitySystem.API.Middleware
             await context.Response.WriteAsJsonAsync(response);
         }
 
+        private async Task HandleStatusCodeAsync(HttpContext context)
+        {
+            context.Response.ContentType = "application/json";
 
+            var message = context.Response.StatusCode switch
+            {
+                401 => "Unauthorized: Access is denied due to invalid credentials.",
+                403 => "Forbidden: You do not have permission to access this resource.",
+                404 => "Not Found: The requested resource could not be found.",
+                405 => "Method Not Allowed: The HTTP method is not supported for this endpoint.",
+                _ => "An error occurred while processing your request."
+            };
+
+            var response = ApiResponse<object>.Fail(message);
+            await context.Response.WriteAsJsonAsync(response);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UniversitySystem.API.Controllers.BaseController;
@@ -10,6 +11,7 @@ using UniversitySystem.Domain.Common.Filters;
 
 namespace UniversitySystem.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class EnrollmentController : BaseApiController

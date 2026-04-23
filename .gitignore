@@ -11,9 +11,6 @@ x86/
 *.userosscache
 *.sln.docstates
 
-#Keep your DB passwords off GitHub
-appsettings.Development.json
-appsettings.Local.json
 
 
 *.rsuser
